@@ -9,16 +9,20 @@
 int main(int argc, char** argv) {
   auto start = std::chrono::high_resolution_clock::now();
 
+  // Check if the user provided a command line argument
+  if (argc < 2) {
+    std::cout << "Please provide the number of elements as a command line argument.\n";
+    return 1; // Return an error code
+  }
+
   // Number of rows and columns in our matrix
-  const auto num_elements = 1000;
+  const auto num_elements = std::stoi(argv[1]);
   // Maximum number of iterations before quiting
   const auto max_iter = 10000;
   // Error tolerance for iteration
   const auto max_error = 0.01f;
   // Initialize random number generator
   srand(12345);
-  int max_threads = omp_get_max_threads();
-    std::cout << "Max threads: " << max_threads << std::endl;
   auto* old_solution = new float[num_elements * num_elements];
 
   // Fill old_solution with data
@@ -55,15 +59,16 @@ int main(int argc, char** argv) {
     iterations += 1;
   }
 
-  std::cout << "array[20][20] = " << old_solution[20 + num_elements*20] << std::endl;
-  std::cout << "arr_new[20][20] = " << new_solution[20 + num_elements*20] << std::endl;
   delete[] old_solution;
   delete[] new_solution;
 
   auto finish = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::seconds>(finish - start);
 
+  int max_threads = omp_get_max_threads();
+  std::cout << "Max threads: " << max_threads << std::endl;
   std::cout << "Number of iterations: " << iterations << std::endl;
+  std::cout << "Matrix size: " << num_elements*num_elements << std::endl;
   std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
 
   return 0;
