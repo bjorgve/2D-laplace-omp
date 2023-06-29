@@ -49,25 +49,23 @@ int main(int argc, char** argv) {
     error = 0.0f;
     omp::jacobi(old_solution, new_solution, num_elements);
     omp::check_error(old_solution, new_solution, num_elements, error);
-    // transfer_solution(old_solution, new_solution, num_elements);
+
     // Swap the pointers between old_solution and new_solution
     std::swap(old_solution, new_solution);
     iterations += 1;
   }
 
+  // Calculate and display the results
   auto finish = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::seconds>(finish - start);
 
-  int max_threads = omp_get_max_threads();
-  std::cout << "Solution value at [20][20]: " << old_solution[20 + num_elements * 20] << std::endl;
-  std::cout << "New solution value at [20][20]: " << new_solution[20 + num_elements * 20] << std::endl;
+  std::cout << "Number of elements: " << num_elements << std::endl;
   std::cout << "Number of iterations: " << iterations << std::endl;
   std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
 
   // Free memory
   delete[] old_solution;
   delete[] new_solution;
-
 
   return 0;
 }
