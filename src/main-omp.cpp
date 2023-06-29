@@ -59,17 +59,21 @@ int main(int argc, char** argv) {
     iterations += 1;
   }
 
-  delete[] old_solution;
-  delete[] new_solution;
-
   auto finish = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::seconds>(finish - start);
 
   int max_threads = omp_get_max_threads();
-  std::cout << "Max threads: " << max_threads << std::endl;
+  std::cout << "Solution value at [20][20]: " << old_solution[20 + num_elements * 20] << std::endl;
+  std::cout << "New solution value at [20][20]: " << new_solution[20 + num_elements * 20] << std::endl;
   std::cout << "Number of iterations: " << iterations << std::endl;
-  std::cout << "Matrix size: " << num_elements*num_elements << std::endl;
   std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+  // std::cout << "Max threads: " << max_threads << std::endl;
+  // std::cout << "Number of iterations: " << iterations << std::endl;
+  // std::cout << "Matrix size: " << num_elements*num_elements << std::endl;
+  // std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+  delete[] old_solution;
+  delete[] new_solution;
+
 
   return 0;
 }
