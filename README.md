@@ -1,5 +1,3 @@
-# 2D-laplace-omp
-
 # 2D-Laplace Solver with OpenMP
 
 This project provides an implementation of a 2D-Laplace solver using OpenMP. The goal is to examine the performance and scaling characteristics of the solver.
