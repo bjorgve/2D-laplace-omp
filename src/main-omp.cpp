@@ -15,26 +15,22 @@ int main(int argc, char** argv) {
     return 1; // Return an error code
   }
 
-  // Number of rows and columns in our matrix
+  // Constants and initializations
   const auto num_elements = std::stoi(argv[1]);
-  // Maximum number of iterations before quiting
   const auto max_iter = 10000;
-  // Error tolerance for iteration
   const auto max_error = 0.01f;
-  // Initialize random number generator
   srand(12345);
-  auto* old_solution = new float[num_elements * num_elements];
 
-  // Fill old_solution with data
+  // Memory allocation
+  auto* old_solution = new float[num_elements * num_elements];
+  auto* new_solution = new float[num_elements * num_elements];
+
+  // Fill old_solution with random values between [0, 1]
   for (auto i = 0u; i < num_elements; i++) {
     for (auto j = 0u; j < num_elements; j++) {
-      // The following will create random values between [0, 1]
       old_solution[i + num_elements * j] = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     }
   }
-
-  // Before starting calculation we will define a few helper variables
-  auto* new_solution = new float[num_elements * num_elements];
 
   // Copy the boundary conditions from the old_solution to the new_solution
   for (auto i = 0u; i < num_elements; i++) {
@@ -67,10 +63,8 @@ int main(int argc, char** argv) {
   std::cout << "New solution value at [20][20]: " << new_solution[20 + num_elements * 20] << std::endl;
   std::cout << "Number of iterations: " << iterations << std::endl;
   std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
-  // std::cout << "Max threads: " << max_threads << std::endl;
-  // std::cout << "Number of iterations: " << iterations << std::endl;
-  // std::cout << "Matrix size: " << num_elements*num_elements << std::endl;
-  // std::cout << "Time taken: " << duration.count() << " seconds" << std::endl;
+
+  // Free memory
   delete[] old_solution;
   delete[] new_solution;
 
